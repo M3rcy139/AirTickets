@@ -18,12 +18,16 @@ namespace AirTickets.Persistence.Configurations
                    .IsRequired()
                    .HasMaxLength(20);
 
-            builder.Property(s => s.IsAvailable)
-                   .IsRequired();
+            // Связь с Aircraft
+            builder.HasOne(s => s.Aircraft)
+                   .WithMany(a => a.Seats)
+                   .HasForeignKey(s => s.AircraftId)
+                   .OnDelete(DeleteBehavior.Cascade);
 
-            builder.HasOne(s => s.Flight)
-                   .WithMany(f => f.Seats)
-                   .HasForeignKey(s => s.FlightId)
+            // Список доступностей для Seat
+            builder.HasMany(s => s.SeatAvailabilities)
+                   .WithOne(sa => sa.Seat)
+                   .HasForeignKey(sa => sa.SeatId)
                    .OnDelete(DeleteBehavior.Cascade);
         }
     }

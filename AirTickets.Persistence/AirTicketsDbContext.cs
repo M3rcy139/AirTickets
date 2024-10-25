@@ -1,4 +1,5 @@
-﻿using AirTickets.Persistence.Entities;
+﻿using AirTickets.Core.Models;
+using AirTickets.Persistence.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
@@ -9,6 +10,7 @@ namespace AirTickets.Persistence
     {
         public DbSet<FlightEntity> Flights { get; set; }
         public DbSet<SeatEntity> Seats { get; set; }
+        public DbSet<SeatAvailability> SeatAvailabilities { get; set; }
         public DbSet<AircraftEntity> Aircrafts { get; set; }
         public DbSet<CrewEntity> Crews { get; set; }
         public DbSet<CrewMemberEntity> CrewMembers { get; set; }

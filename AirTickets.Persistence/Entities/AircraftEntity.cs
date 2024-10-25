@@ -6,5 +6,7 @@
         public string Model { get; set; }
         public int TotalEconomySeats { get; set; }
         public int TotalBusinessSeats { get; set; }
+
+        public List<SeatEntity> Seats { get; set; }
     }
 }

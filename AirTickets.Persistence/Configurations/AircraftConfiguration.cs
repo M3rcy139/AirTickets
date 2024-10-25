@@ -19,6 +19,11 @@ namespace AirTickets.Persistence.Configurations
 
             builder.Property(a => a.TotalBusinessSeats)
                    .IsRequired();
+
+            builder.HasMany(a => a.Seats)
+                   .WithOne(s => s.Aircraft)
+                   .HasForeignKey(s => s.AircraftId)
+                   .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

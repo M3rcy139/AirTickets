@@ -4,10 +4,10 @@
     {
         public int Id { get; set; }
         public string SeatNumber { get; set; }
-        public int FlightId { get; set; }
+        public int AircraftId { get; set; }
         public string Class { get; set; }
-        public bool IsAvailable { get; set; }
-        
-        public FlightEntity Flight { get; set; }
+
+        public AircraftEntity Aircraft { get; set; }
+        public List<SeatAvailabilityEntity> SeatAvailabilities { get; set; }
     }
 }
