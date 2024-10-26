@@ -8,11 +8,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AirTickets.Core\AirTickets.Core.csproj" />
-    <ProjectReference Include="..\AirTickets.Persistence\AirTickets.Persistence.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Dto\Request\" />
   </ItemGroup>
 
 </Project>

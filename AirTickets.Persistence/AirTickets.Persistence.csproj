@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AirTickets.Application\AirTickets.Application.csproj" />
     <ProjectReference Include="..\AirTickets.Core\AirTickets.Core.csproj" />
   </ItemGroup>
 

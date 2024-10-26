@@ -1,6 +1,6 @@
-﻿using AirTickets.Application.Interfaces;
+﻿using AirTickets.Application.Interfaces.Services;
 using AirTickets.Core.Models;
-using AirTickets.Persistence.Interfaces;
+using AirTickets.Application.Interfaces.Repositories;
 
 namespace AirTickets.Application.Services
 {

@@ -1,8 +1,9 @@
 ﻿using AirTickets.Core.Models;
 
-namespace AirTickets.Application.Interfaces
+
+namespace AirTickets.Application.Interfaces.Repositories
 {
-    public interface IFlightService
+    public interface IFlightRepository
     {
         Task<List<Flight>> GetAllFlights();
         Task<Flight> GetFlightDetails(int flightId);

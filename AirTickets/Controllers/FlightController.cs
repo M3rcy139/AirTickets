@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using AirTickets.Application.Dto.Response;
 using Microsoft.EntityFrameworkCore;
-using AirTickets.Application.Interfaces;
+using AirTickets.Application.Interfaces.Services;
 
 namespace AirTickets.Controllers
 {

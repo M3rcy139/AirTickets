@@ -1,16 +1,20 @@
-﻿namespace AirTickets.Persistence.Entities
+﻿using AirTickets.Core.Models;
+
+namespace AirTickets.Persistence.Entities
 {
     public class PaymentEntity
     {
         public Guid Id { get; set; }
         public Guid UserId { get; set; }
-        public string PaymentMethod { get; set; }
-        public int TicketId { get; set; }
+        public int SeatId { get; set; }
+        public string PaymentType { get; set; }
         public decimal Amount { get; set; }
-        public decimal Change { get; set; }
-        public DateTime PaymentDate { get; set; }
+        public decimal? ChangeGiven { get; set; }
+        public DateTime PaymentTime { get; set; }
 
-        public TicketEntity Ticket { get; set; }
         public UserEntity User { get; set; }
+
+        public ICollection<SeatAvailabilityEntity> SeatAvailabilities { get; set; }
+        public ICollection<TicketEntity> Tickets { get; set; }
     }
 }

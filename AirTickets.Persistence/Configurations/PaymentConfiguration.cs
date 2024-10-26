@@ -10,7 +10,7 @@ namespace AirTickets.Persistence.Configurations
         {
             builder.HasKey(p => p.Id);
 
-            builder.Property(p => p.PaymentMethod)
+            builder.Property(p => p.PaymentType)
                    .IsRequired()
                    .HasMaxLength(50);
 
@@ -18,17 +18,26 @@ namespace AirTickets.Persistence.Configurations
                    .HasColumnType("decimal(18,2)")
                    .IsRequired();
 
-            builder.Property(p => p.Change)
+            builder.Property(p => p.ChangeGiven)
                    .HasColumnType("decimal(18,2)");
 
-            builder.Property(p => p.PaymentDate)
+            builder.Property(p => p.PaymentTime)
                    .IsRequired();
 
-            // Ссылка на билет
-            builder.HasOne(p => p.Ticket)
-                   .WithMany()
-                   .HasForeignKey(p => p.TicketId)
-                   .OnDelete(DeleteBehavior.Restrict);
+            builder.HasOne(p => p.User)
+                .WithMany(u => u.Payments)
+                .HasForeignKey(p => p.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasMany(p => p.SeatAvailabilities)
+              .WithOne(sa => sa.Payment)
+              .HasForeignKey(sa => sa.PaymentId)
+              .OnDelete(DeleteBehavior.SetNull);
+
+            builder.HasMany(p => p.Tickets)
+                   .WithOne(t => t.Payment)
+                   .HasForeignKey(t => t.PaymentId)
+                   .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

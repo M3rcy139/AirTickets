@@ -16,7 +16,7 @@ namespace AirTickets.Persistence
         public DbSet<CrewMemberEntity> CrewMembers { get; set; }
         public DbSet<TicketEntity> Tickets { get; set; }
         public DbSet<PaymentEntity> Payments { get; set; }
-        public DbSet<IssueReportEntity> TerminalIssues { get; set; }
+        public DbSet<IssueReportEntity> IssueReports { get; set; }
         public DbSet<UserEntity> Users { get; set; }
     }
 }

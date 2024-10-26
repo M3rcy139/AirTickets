@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using AirTickets.Application.Interfaces;
+using AirTickets.Application.Interfaces.Services;
 
 namespace AirTickets.Controllers
 {

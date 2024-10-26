@@ -17,6 +17,9 @@ namespace AirTickets.Persistence.Configurations
             builder.Property(f => f.DepartureDateTime)
                     .IsRequired();
 
+            builder.Property(f => f.ArrivalDateTime)
+                    .IsRequired();
+
             builder.Property(f => f.EconomyClassPrice)
                     .HasColumnType("decimal(18,2)");
 

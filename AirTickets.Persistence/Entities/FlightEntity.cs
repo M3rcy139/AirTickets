@@ -7,6 +7,7 @@
         public int AircraftId { get; set; }
         public int CrewId { get; set; }
         public DateTime DepartureDateTime { get; set; }
+        public DateTime ArrivalDateTime { get; set; }
         public decimal EconomyClassPrice { get; set; }
         public decimal BusinessClassPrice { get; set; }
         

@@ -11,12 +11,14 @@ namespace AirTickets.Persistence.Configurations
             builder.HasKey(s => s.Id);
 
             builder.Property(s => s.SeatNumber)
-                   .IsRequired()
-                   .HasMaxLength(10);
+                   .IsRequired();
 
             builder.Property(s => s.Class)
                    .IsRequired()
                    .HasMaxLength(20);
+
+            builder.Property(s => s.Price)
+                    .HasColumnType("decimal(18,2)");
 
             // Связь с Aircraft
             builder.HasOne(s => s.Aircraft)
