@@ -8,30 +8,51 @@ namespace AirTickets.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<TicketEntity> builder)
         {
+            builder.ToTable("Tickets");
+
             builder.HasKey(t => t.Id);
 
-            builder.Property(t => t.PassengerName)
+            builder.HasOne(t => t.Seat)
+                   .WithMany() 
+                   .HasForeignKey(t => t.SeatId)
+                   .OnDelete(DeleteBehavior.Restrict); 
+
+            builder.HasOne(t => t.Aircraft)
+                   .WithMany() 
+                   .HasForeignKey(t => t.AircraftModel)
+                   .HasPrincipalKey(a => a.Model) 
+                   .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasOne(t => t.Payment)
+                   .WithMany(p => p.Tickets) 
+                   .HasForeignKey(t => t.PaymentId)
+                   .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Property(t => t.RouteName)
                    .IsRequired()
-                   .HasMaxLength(100);
+                   .HasMaxLength(100); 
+
+            builder.Property(t => t.UserName)
+                   .IsRequired()
+                   .HasMaxLength(50); 
+
+            builder.Property(t => t.UserSurname)
+                   .IsRequired()
+                   .HasMaxLength(50); 
+
+            builder.Property(t => t.Class)
+                   .IsRequired()
+                   .HasMaxLength(20); 
+
+            builder.Property(t => t.DepartureDateTime)
+                   .IsRequired();
+
+            builder.Property(t => t.ArrivalDateTime)
+                   .IsRequired();
 
             builder.Property(t => t.Price)
-                   .HasColumnType("decimal(18,2)")
-                   .IsRequired();
-
-            builder.Property(t => t.PurchaseDate)
-                   .IsRequired();
-
-            // Ссылка на рейс
-            builder.HasOne(t => t.Flight)
-                   .WithMany()
-                   .HasForeignKey(t => t.FlightId)
-                   .OnDelete(DeleteBehavior.Restrict);
-
-            // Ссылка на место
-            builder.HasOne(t => t.Seat)
-                   .WithMany()
-                   .HasForeignKey(t => t.SeatId)
-                   .OnDelete(DeleteBehavior.Restrict);
+                   .IsRequired()
+                   .HasColumnType("decimal(18,2)"); 
         }
     }
 }

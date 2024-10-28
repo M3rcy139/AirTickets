@@ -8,6 +8,8 @@ namespace AirTickets.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<AircraftEntity> builder)
         {
+            builder.ToTable("Aircrafts");
+
             builder.HasKey(a => a.Id);
 
             builder.Property(a => a.Model)

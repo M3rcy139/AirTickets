@@ -1,4 +1,4 @@
-﻿using AirTickets.Application.Interfaces.Repositories
+﻿using AirTickets.Application.Interfaces.Repositories;
 using AirTickets.Core.Models;
 using AirTickets.Application.Interfaces.Services;
 

@@ -18,8 +18,8 @@ namespace AirTickets.Persistence.Entities
         public Guid PaymentId { get; set; }
 
 
-        public Seat Seat { get; set; }
-        public Aircraft Aircraft { get; set; }
-        public Payment Payment { get; set; }
+        public SeatEntity Seat { get; set; }
+        public AircraftEntity Aircraft { get; set; }
+        public PaymentEntity Payment { get; set; }
     }
 }

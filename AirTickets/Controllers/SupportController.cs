@@ -7,7 +7,7 @@ namespace AirTickets.Controllers
     [ApiController]
     public class SupportController : ControllerBase
     {
-        [HttpPost("report-issue/{message}")]
+        [HttpPost("report-issue")]
         public async Task<IActionResult> ReportIssue([FromBody] string message, ISupportRepository supportRepository)
         {
             try

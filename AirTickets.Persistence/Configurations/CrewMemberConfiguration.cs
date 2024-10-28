@@ -8,6 +8,8 @@ namespace AirTickets.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<CrewMemberEntity> builder)
         {
+            builder.ToTable("CrewMembers");
+
             builder.HasKey(cm => cm.Id);
 
             builder.Property(cm => cm.Name)

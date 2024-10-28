@@ -1,15 +1,21 @@
+using AirTickets.Persistence.Mappings;
+using AirTickets.Persistence;
+using AirTickets.Application;
+
 var builder = WebApplication.CreateBuilder(args);
+var services = builder.Services;
+var configuration = builder.Configuration;
+services.AddControllers();
+services.AddEndpointsApiExplorer();
+services.AddSwaggerGen();
 
-// Add services to the container.
+services.AddPersistence(configuration)
+        .AddApplication();
 
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+services.AddAutoMapper(typeof(DataBaseMappings));
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -17,8 +23,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
-app.UseAuthorization();
 
 app.MapControllers();
 

@@ -8,9 +8,10 @@ namespace AirTickets.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<CrewEntity> builder)
         {
+            builder.ToTable("Crews");
+
             builder.HasKey(c => c.Id);
 
-            // Один экипаж имеет много членов экипажа
             builder.HasMany(c => c.Members)
                    .WithOne(cm => cm.Crew)
                    .HasForeignKey(cm => cm.CrewId)

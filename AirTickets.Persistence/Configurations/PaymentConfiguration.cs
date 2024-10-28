@@ -8,6 +8,8 @@ namespace AirTickets.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<PaymentEntity> builder)
         {
+            builder.ToTable("Payments");
+
             builder.HasKey(p => p.Id);
 
             builder.Property(p => p.PaymentType)

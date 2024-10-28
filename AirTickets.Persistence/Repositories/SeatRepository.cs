@@ -1,5 +1,5 @@
 ﻿using AirTickets.Core.Models;
-using AirTickets.Persistence.Interfaces;
+using AirTickets.Application.Interfaces.Repositories;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 

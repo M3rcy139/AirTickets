@@ -16,7 +16,8 @@ namespace AirTickets.Persistence.Mappings
             CreateMap<UserEntity, User>();
             CreateMap<IssueReportEntity, IssueReport>();
             CreateMap<CrewMemberEntity, CrewMember>();
-            CreateMap<FlightEntity, Flight>();  
+            CreateMap<FlightEntity, Flight>(); 
+            CreateMap<SeatAvailabilityEntity, SeatAvailability>();
         }
     }
 }

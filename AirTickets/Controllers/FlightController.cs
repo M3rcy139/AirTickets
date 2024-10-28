@@ -19,30 +19,52 @@ namespace AirTickets.Controllers
         [HttpGet("get-all-flights")]
         public async Task<IActionResult> GetAllFlight()
         {
-            var flights = await _flightService.GetAllFlights();
+            try
+            {
+                var flights = await _flightService.GetAllFlights();
 
-            var response = flights.Select(f => f).ToList();
+                var response = flights.Select(f => f).ToList();
 
-            return Ok(response);
+                return Ok(response);
+            }
+            catch (ArgumentException ex)
+            {
+                return NotFound(new { error = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { error = "An unexpected error occurred.", details = ex.Message });
+            }
         }
 
         [HttpGet("{flightId}")]
         public async Task<IActionResult> GetFlightDetails(int flightId)
         {
-            var flight = await _flightService.GetFlightDetails(flightId);
+            try
+            {
+                var flight = await _flightService.GetFlightDetails(flightId);
 
-            var response = new FlightResponse
-            (
-                flight.RouteName,
-                flight.Aircraft.Model,
-                flight.Aircraft.Id,
-                flight.DepartureDateTime,
-                flight.Crew,
-                flight.EconomyClassPrice,
-                flight.BusinessClassPrice
-            );
+                var response = new FlightResponse
+                (
+                    flight.RouteName,
+                    flight.Aircraft.Model,
+                    flight.Aircraft.Id,
+                    flight.DepartureDateTime,
+                    flight.Crew,
+                    flight.EconomyClassPrice,
+                    flight.BusinessClassPrice
+                );
 
-            return Ok(response);
+                return Ok(response);
+            }
+            catch (ArgumentException ex)
+            {
+                return NotFound(new { error = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { error = "An unexpected error occurred.", details = ex.Message });
+            }
         }
     }
 }

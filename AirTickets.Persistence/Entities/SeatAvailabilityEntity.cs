@@ -6,7 +6,7 @@
         public int SeatId { get; set; }
         public int FlightId { get; set; }
         public bool IsAvailable { get; set; }
-        public Guid PaymentId { get; set; }
+        public Guid? PaymentId { get; set; }
 
         public PaymentEntity Payment { get; set; }
         public FlightEntity Flight { get; set; }
