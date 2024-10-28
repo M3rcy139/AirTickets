@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35013.160
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirTickets", "AirTickets\AirTickets.csproj", "{4C3CF50E-51CE-4236-BB59-0A7A25D70189}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AirTickets", "AirTickets\AirTickets.csproj", "{4C3CF50E-51CE-4236-BB59-0A7A25D70189}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirTickets.Application", "AirTickets.Application\AirTickets.Application.csproj", "{483F31B2-B5A7-42A7-8C57-AC229CAE292D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AirTickets.Application", "AirTickets.Application\AirTickets.Application.csproj", "{483F31B2-B5A7-42A7-8C57-AC229CAE292D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirTickets.Core", "AirTickets.Core\AirTickets.Core.csproj", "{D5944823-65D3-4BDC-BD55-E40CF425B079}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AirTickets.Core", "AirTickets.Core\AirTickets.Core.csproj", "{D5944823-65D3-4BDC-BD55-E40CF425B079}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirTickets.Persistence", "AirTickets.Persistence\AirTickets.Persistence.csproj", "{6E3DB032-39A0-4F93-971A-CCC436D4F645}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AirTickets.Persistence", "AirTickets.Persistence\AirTickets.Persistence.csproj", "{6E3DB032-39A0-4F93-971A-CCC436D4F645}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirTickets.Wpf", "AirTickets.Wpf\AirTickets.Wpf.csproj", "{8A3D50FF-2B1D-4C40-AD0F-B597625CD961}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{6E3DB032-39A0-4F93-971A-CCC436D4F645}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6E3DB032-39A0-4F93-971A-CCC436D4F645}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6E3DB032-39A0-4F93-971A-CCC436D4F645}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A3D50FF-2B1D-4C40-AD0F-B597625CD961}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A3D50FF-2B1D-4C40-AD0F-B597625CD961}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A3D50FF-2B1D-4C40-AD0F-B597625CD961}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A3D50FF-2B1D-4C40-AD0F-B597625CD961}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

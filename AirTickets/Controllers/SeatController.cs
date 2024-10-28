@@ -52,7 +52,7 @@ namespace AirTickets.Controllers
                     seatAvailability.IsAvailable
                 );
 
-                return Ok(seat);
+                return Ok(response);
             }
             catch (ArgumentException ex)
             {

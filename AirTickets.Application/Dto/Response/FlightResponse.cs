@@ -8,9 +8,11 @@ namespace AirTickets.Application.Dto.Response
         string AircraftModel,
         int AircraftId,
         DateTime DepartureTime,
+        DateTime ArrivalTime,
         Crew Crew,
         decimal EconomyClasPrice,
-        decimal BuisnessClassPrice
-
+        decimal BuisnessClassPrice,
+        int TotalEconomySeats,
+        int TotalBusinessSeats
     );
 }

@@ -38,5 +38,24 @@ namespace AirTickets.Persistence.Repositories
 
             return _mapper.Map<Flight>(flight);
         }
+
+        public async Task<List<CrewMember>> GetCrewMemberships(int crewId)
+        {
+            var crewMemberships = await _context.CrewMembers
+                .Where(c => c.Id == crewId)
+                .ToListAsync();
+
+            if (!crewMemberships.Any()) throw new ArgumentException($"Членов экипажа для данного экипажа ({crewId}) не найдено");
+
+            return _mapper.Map<List<CrewMember>>(crewMemberships);
+        }
+
+        public async Task<Aircraft> GetAircraftDetails(int aircraftId)
+        {
+            var aircraft = await _context.Aircrafts
+                .FirstOrDefaultAsync(a => a.Id == aircraftId) ?? throw new ArgumentException($"Самолет ({aircraftId}) не найден");
+
+            return _mapper.Map<Aircraft>(aircraft);
+        }
     }
 }

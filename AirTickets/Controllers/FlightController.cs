@@ -37,12 +37,14 @@ namespace AirTickets.Controllers
             }
         }
 
-        [HttpGet("{flightId}")]
+        [HttpGet("get-flight-details/{flightId}")]
         public async Task<IActionResult> GetFlightDetails(int flightId)
         {
             try
             {
                 var flight = await _flightService.GetFlightDetails(flightId);
+
+                var aircraft = await _flightService.GetAircraftDetails(flight.AircraftId);
 
                 var response = new FlightResponse
                 (
@@ -50,12 +52,34 @@ namespace AirTickets.Controllers
                     flight.Aircraft.Model,
                     flight.Aircraft.Id,
                     flight.DepartureDateTime,
+                    flight.ArrivalDateTime,
                     flight.Crew,
                     flight.EconomyClassPrice,
-                    flight.BusinessClassPrice
+                    flight.BusinessClassPrice,
+                    aircraft.TotalEconomySeats,
+                    aircraft.TotalBusinessSeats
                 );
 
                 return Ok(response);
+            }
+            catch (ArgumentException ex)
+            {
+                return NotFound(new { error = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { error = "An unexpected error occurred.", details = ex.Message });
+            }
+        }
+
+        [HttpGet("get-crew-memberships/{crewId}")]
+        public async Task<IActionResult> GetCrewMemberships(int crewId)
+        {
+            try
+            {
+                var crew = await _flightService.GetCrewMemberships(crewId);
+
+                return Ok(crew);
             }
             catch (ArgumentException ex)
             {

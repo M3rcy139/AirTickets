@@ -26,5 +26,19 @@ namespace AirTickets.Application.Services
 
             return flightDetail;
         }
+
+        public async Task<List<CrewMember>> GetCrewMemberships(int crewId)
+        {
+            var crewMemberships = await _flightRepository.GetCrewMemberships(crewId);
+
+            return crewMemberships;
+        }
+
+        public async Task<Aircraft> GetAircraftDetails(int aircraftId)
+        {
+            var aircraft = await _flightRepository.GetAircraftDetails(aircraftId);
+
+            return aircraft;
+        }
     }
 }
