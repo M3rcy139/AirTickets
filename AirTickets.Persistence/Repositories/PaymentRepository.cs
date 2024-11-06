@@ -4,6 +4,7 @@ using AirTickets.Application.Interfaces.Services;
 using AutoMapper;
 using AirTickets.Persistence.Entities;
 using Microsoft.EntityFrameworkCore;
+using System.Globalization;
 
 namespace AirTickets.Persistence.Repositories
 {
@@ -18,7 +19,7 @@ namespace AirTickets.Persistence.Repositories
             _mapper = mapper;
             _seatService = seatService;
         }
-        public async Task<Payment> ProcessPayment(User user, decimal amountPaid, string paymentType, int seatId, int seanceId)
+        public async Task<Payment> ProcessPayment(User user, decimal amountPaid, string paymentType, List<int> seatIds, int seanceId)
         {
             var userEntity = new UserEntity
             {
@@ -28,29 +29,42 @@ namespace AirTickets.Persistence.Repositories
                 Email = user.Email,
             };
 
-            var totalCost = _seatService.GetSeatPrice(seatId).Result;
+            decimal totalCost = 0;
+            foreach (var seatId in seatIds)
+            {
+                totalCost += await _seatService.GetSeatPrice(seatId);
+            }
 
             if (totalCost > amountPaid)
                 throw new InvalidOperationException("Недостаточно средств");
 
             decimal changeGiven = amountPaid - totalCost;
 
+            var ticketEntities = new List<TicketEntity>();
+
+
             var paymentEntity = new PaymentEntity
             {
                 Id = Guid.NewGuid(),
                 UserId = user.Id,
-                SeatId = seatId,
+                SeatIds = seatIds,
                 Amount = amountPaid,
                 PaymentType = paymentType,
                 PaymentTime = DateTime.UtcNow,
-                ChangeGiven = changeGiven
+                ChangeGiven = changeGiven 
             };
 
-            var ticketEntity = await GetInfoForTicket(user, seatId, seanceId, paymentEntity.Id);
+            // Генерируем платеж и билет для каждого выбранного места
+            foreach (var seatId in seatIds)
+            { 
+                var ticketEntity = await GetInfoForTicket(user, seatId, seanceId, paymentEntity.Id);
+
+                ticketEntities.Add(ticketEntity);
+            }
 
             await _context.Users.AddAsync(userEntity);
             await _context.Payments.AddAsync(paymentEntity);
-            await _context.Tickets.AddAsync(ticketEntity);
+            await _context.Tickets.AddRangeAsync(ticketEntities);
             await _context.SaveChangesAsync();
 
             return _mapper.Map<Payment>(paymentEntity);
@@ -89,15 +103,16 @@ namespace AirTickets.Persistence.Repositories
             return ticketEntity;
         }
 
-        public async Task<Ticket> GetTicket(Guid paymentId)
+        public async Task<List<Ticket>> GetTickets(Guid paymentId)
         {
             var ticket = await _context.Tickets
                 .Include(t => t.Seat)
                 .Include(t => t.Payment)
-                .FirstOrDefaultAsync(t => t.PaymentId == paymentId)
+                .Where(t => t.PaymentId == paymentId)
+                .ToListAsync()
                 ?? throw new ArgumentException("Билет найти не удалось");
 
-            return _mapper.Map<Ticket>(ticket);
+            return _mapper.Map<List<Ticket>>(ticket);
         }
     }
 }

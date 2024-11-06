@@ -4,7 +4,7 @@
     {
         public Guid Id { get; set; }
         public Guid UserId { get; set; }
-        public int SeatId { get; set; }
+        public List<int> SeatIds { get; set; }
         public string PaymentType { get; set; }
         public decimal Amount { get; set; }
         public decimal? ChangeGiven { get; set; }

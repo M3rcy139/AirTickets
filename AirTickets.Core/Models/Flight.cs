@@ -1,5 +1,4 @@
-﻿
-namespace AirTickets.Core.Models
+﻿namespace AirTickets.Core.Models
 {
     public class Flight
     {

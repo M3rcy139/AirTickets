@@ -8,7 +8,7 @@ namespace AirTickets.Application.Dto.Request
         string Email,
         string PaymentType,
         decimal AmountPaid,
-        int SeatId,
+        List<int> SeatIds,
         int FlightId
     );
 }

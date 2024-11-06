@@ -42,7 +42,7 @@ namespace AirTickets.Persistence.Repositories
         public async Task<List<CrewMember>> GetCrewMemberships(int crewId)
         {
             var crewMemberships = await _context.CrewMembers
-                .Where(c => c.Id == crewId)
+                .Where(c => c.CrewId == crewId)
                 .ToListAsync();
 
             if (!crewMemberships.Any()) throw new ArgumentException($"Членов экипажа для данного экипажа ({crewId}) не найдено");

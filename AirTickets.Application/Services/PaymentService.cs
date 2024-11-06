@@ -14,20 +14,23 @@ namespace AirTickets.Application.Services
             _seatService = seatService;
         }
 
-        public async Task<Payment> ProcessPayment(User user, decimal amountPaid, string paymentType, int seatId, int flightId)
+        public async Task<Payment> ProcessPayment(User user, decimal amountPaid, string paymentType, List<int> seatIds, int flightId)
         {
-            var payment = await _paymentRepository.ProcessPayment(user, amountPaid, paymentType, seatId, flightId);
+            var payment = await _paymentRepository.ProcessPayment(user, amountPaid, paymentType, seatIds, flightId);
 
-            await _seatService.ChangeSeatStatus(seatId, flightId, false);
+            foreach (int seatId in seatIds)
+            {
+                await _seatService.ChangeSeatStatus(seatId, flightId, false);
+            }
 
             return payment;
         }
         
-        public async Task<Ticket> GetTicket(Guid paymentId)
+        public async Task<List<Ticket>> GetTickets(Guid paymentId)
         {
-            var ticket = await _paymentRepository.GetTicket(paymentId);
+            var tickets = await _paymentRepository.GetTickets(paymentId);
 
-            return ticket;
+            return tickets;
         }
     }
 }

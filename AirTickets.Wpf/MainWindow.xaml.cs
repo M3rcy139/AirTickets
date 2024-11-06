@@ -27,7 +27,7 @@ namespace AirTickets.Wpf
         {
             try
             {
-                var flights = await GetFlights();
+                var flights = await GetAllFlights();
                 FlightsComboBox.ItemsSource = flights;
             }
             catch (Exception ex)
@@ -43,7 +43,7 @@ namespace AirTickets.Wpf
                 selectedFlight = (Flight)FlightsComboBox.SelectedItem;
                 await LoadFlightDetails(selectedFlight.Id);
                 
-                NameTextBlock.Text = "маршрут:";
+                NameTextBlock.Text = "Маршрут:";
                 DepartureTimeTextBlock.Text = "Время отправления:";
                 ArrivalTimeTextBlock.Text = "Время прибытия:";
                 AircraftTextBlock.Text = "Модель самолета:";
@@ -64,6 +64,7 @@ namespace AirTickets.Wpf
             {
                 selectedFlightInfo = await GetFlightDetails(flightId);
                 SelectSeatsButton.IsEnabled = true;
+                CrewInfoButton.IsEnabled = true;
             }
             catch (Exception ex)
             {
@@ -71,6 +72,13 @@ namespace AirTickets.Wpf
             }
         }
 
+        private void GetCrewInfoButton_Click(object sender, RoutedEventArgs e)
+        {
+            int crewId = selectedFlight.CrewId;
+
+            var crewInfoWindow = new CrewInfoWindow(crewId);
+            crewInfoWindow.Show();
+        }
         private void SelectSeatsButton_Click(object sender, RoutedEventArgs e)
         {
             if (FlightsComboBox.SelectedValue != null)
@@ -94,8 +102,7 @@ namespace AirTickets.Wpf
             supportWindow.ShowDialog();
         }
 
-        // Метод для получения списка залов
-        private async Task<List<Flight>> GetFlights()
+        private async Task<List<Flight>> GetAllFlights()
         {
             HttpResponseMessage response = await _httpClient.GetAsync("https://localhost:7186/api/Flight/get-all-flights");
             response.EnsureSuccessStatusCode();
@@ -103,7 +110,6 @@ namespace AirTickets.Wpf
             return JsonConvert.DeserializeObject<List<Flight>>(content);
         }
 
-        // Метод для получения списка сеансов по залу
         private async Task<FlightResponse> GetFlightDetails(int flightId)
         {
             HttpResponseMessage response = await _httpClient.GetAsync($"https://localhost:7186/api/Flight/get-flight-details/{flightId}");

@@ -23,7 +23,7 @@ namespace AirTickets.Wpf
         private int _totalBusinnesSeats;
         private int _totalEconomySeats;
         private string _aircraftModel;
-        private Button _selectedSeatButton;
+        private List<Button> _selectedSeatButtons = new List<Button>();
 
         public SeatSelectionWindow(int flightId, int aircraftId, int totalBusinnesSeats, int totalEconomySeats, string aircraftModel)
         {
@@ -157,35 +157,45 @@ namespace AirTickets.Wpf
         // Метод обработки клика по месту
         private async void SeatButton_Click(object sender, RoutedEventArgs e)
         {
-            _selectedSeatButton = (Button)sender;
-            var seat = (SeatInfoResponse)_selectedSeatButton.Tag;
+            var seatButton = (Button)sender;
+            var seatInfo = (SeatInfoResponse)seatButton.Tag;
 
-            // Сбрасываем цвет границы у всех кнопок
-            foreach (var child in SeatsGrid.Children)
+            // Проверяем, выбрано ли уже это место
+            if (_selectedSeatButtons.Contains(seatButton))
             {
-                if (child is Button button)
-                {
-                    button.BorderBrush = Brushes.Black;
-                }
+                // Убираем выделение и удаляем из списка
+                seatButton.BorderBrush = Brushes.Black;
+                _selectedSeatButtons.Remove(seatButton);
+            }
+            else
+            {
+                // Выделяем и добавляем в список
+                seatButton.BorderBrush = Brushes.Blue;
+                _selectedSeatButtons.Add(seatButton);
             }
 
-            // Устанавливаем синий цвет границы для выбранной кнопки
-            _selectedSeatButton.BorderBrush = Brushes.Blue;
-
-            await LoadSeatInfo(seat.Id, _flightId);  // Загружаем информацию о месте
+            // Обновляем информацию о последнем выбранном месте (если нужно показать инфо о последнем месте)
+            await LoadSeatInfo(seatInfo.Id, _flightId);
         }
 
         private void OpenPaymentWindowButton_Click(object sender, RoutedEventArgs e)
         {
-            if (_selectedSeatButton?.Tag is SeatInfoResponse seatInfo)
+            if (_selectedSeatButtons.Any())
             {
-                // Открываем окно оплаты и передаем информацию о выбранном месте и сеансе
-                var paymentWindow = new PaymentWindow(seatInfo.Id, _flightId, seatInfo.Price);
+                // Получаем идентификаторы выбранных мест и передаем их в окно оплаты
+                var selectedSeatIds = _selectedSeatButtons
+                    .Select(button => ((SeatInfoResponse)button.Tag).Id)
+                    .ToList();
+
+                decimal totalAmount = _selectedSeatButtons
+                    .Sum(button => ((SeatInfoResponse)button.Tag).Price);
+
+                var paymentWindow = new PaymentWindow(selectedSeatIds, _flightId, totalAmount);
                 paymentWindow.ShowDialog();
             }
             else
             {
-                MessageBox.Show("Пожалуйста, выберите место для оплаты.");
+                MessageBox.Show("Пожалуйста, выберите хотя бы одно место для оплаты.");
             }
         }
 

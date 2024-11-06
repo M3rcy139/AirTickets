@@ -25,13 +25,13 @@ namespace AirTickets.Controllers
                 };
 
                 var payment = await paymentService.ProcessPayment
-                    (user, paymentRequest.AmountPaid, paymentRequest.PaymentType, paymentRequest.SeatId,
+                    (user, paymentRequest.AmountPaid, paymentRequest.PaymentType, paymentRequest.SeatIds,
                         paymentRequest.FlightId);
 
                 var response = new PaymentResponse
                 (
                     payment.Id,
-                    payment.SeatId,
+                    payment.SeatIds,
                     payment.PaymentType,
                     payment.Amount,
                     payment.ChangeGiven,
@@ -55,14 +55,14 @@ namespace AirTickets.Controllers
             }
         }
 
-        [HttpGet("get-ticket/ticket/{paymentId}")]
-        public async Task<IActionResult> GetTicket(Guid paymentId, IPaymentService paymentService)
+        [HttpGet("get-tickets/ticket")]
+        public async Task<IActionResult> GetTickets(Guid paymentId, IPaymentService paymentService)
         {
             try
             {
-                var ticket = await paymentService.GetTicket(paymentId);
+                var tickets = await paymentService.GetTickets(paymentId);
 
-                var response = new TicketResponse
+                var response = tickets.Select(ticket => new TicketResponse
                 (
                     ticket.RouteName,
                     ticket.AircraftModel,
@@ -73,7 +73,7 @@ namespace AirTickets.Controllers
                     ticket.UserSurname,
                     ticket.DepartureDateTime,
                     ticket.ArrivalDateTime
-                );
+                )).ToList();
 
                 return Ok(response);
             }

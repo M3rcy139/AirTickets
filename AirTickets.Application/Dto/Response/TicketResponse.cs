@@ -9,7 +9,7 @@
         decimal Price,
         string UserName,
         string UserSurname,
-        DateTime DepartureDateTimee,
+        DateTime DepartureDateTime,
         DateTime ArrivalDateTime
     );
 }

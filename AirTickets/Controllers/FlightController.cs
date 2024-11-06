@@ -17,7 +17,7 @@ namespace AirTickets.Controllers
         }
 
         [HttpGet("get-all-flights")]
-        public async Task<IActionResult> GetAllFlight()
+        public async Task<IActionResult> GetAllFlights()
         {
             try
             {

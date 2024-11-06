@@ -3,7 +3,7 @@
     public record PaymentResponse
     (
         Guid Id,
-        int SeatId,
+        List<int> SeatIds,
         string PaymentType,
         decimal Amount,
         decimal? ChangeGiven,
